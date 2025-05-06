@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""
+Sistema de fichas bibliográficas
+@author: Caadiazma
+"""
+
+menu = """
+Bienvenido al sistema de fichas bibliográficas
+
+Seleccione el tipo de texto:
+
+1 - Libros
+2 - Artículos
+3 - Tesis
+
+Escoge una opción: """
+
+
+def formato_libro(apellido, nombre, titulo, lugar, editorial, fecha, paginas):
+    return {
+        "Historia Mexicana": f"{apellido}, {nombre}, {titulo}, {lugar}, {editorial}, {fecha}.",
+        "Chicago": f"{apellido}, {nombre}. {titulo}. {lugar}: {editorial}, {fecha}.",
+        "APA": f"{apellido}, {nombre}, ({fecha}). {titulo}. {lugar}: {editorial}.",
+        "UNAM": f"{apellido}, {nombre}, {titulo}, {lugar}, {editorial}, {fecha}, {paginas}p."
+    }
+
+
+def formato_articulo(apellido, nombre, titulo, revista, entidad_editora, lugar, numero, fecha, paginas):
+    return {
+        "Historia Mexicana": f"{apellido}, {nombre}, '{titulo}', en {revista}, {numero} ({fecha}), pp.{paginas}.",
+        "Chicago": f"{apellido}, {nombre}. '{titulo}'. {revista}, {numero} ({fecha}): {paginas}.",
+        "UNAM": f"{apellido}, {nombre}, '{titulo}', {revista}, {entidad_editora}, {lugar}, {numero}, {fecha}, p. {paginas}."
+    }
+
+
+def formato_tesis(apellido, nombre, titulo, programa, lugar, universidad, fecha, paginas):
+    return {
+        "Historia Mexicana": f"{apellido}, {nombre}, '{titulo}', tesis de {programa}, {lugar}, {universidad}, {fecha}.",
+        "UNAM": f"{apellido}, {nombre}, '{titulo}', tesis de {programa}, {lugar}, {universidad}, {fecha}, {paginas}p."
+    }
+
+
+def run():
+    opcion = input(menu).strip()
+
+    if opcion == "1":
+        datos = {
+            "apellido": input("Apellido del autor: "),
+            "nombre": input("Nombre del autor: "),
+            "titulo": input("Título del libro: "),
+            "lugar": input("Lugar de edición: "),
+            "editorial": input("Editorial: "),
+            "fecha": input("Fecha de publicación: "),
+            "paginas": input("Número de páginas: ")
+        }
+        referencias = formato_libro(**datos)
+
+    elif opcion == "2":
+        datos = {
+            "apellido": input("Apellido del autor: "),
+            "nombre": input("Nombre del autor: "),
+            "titulo": input("Título del artículo: "),
+            "revista": input("Nombre de la revista: "),
+            "entidad_editora": input("Nombre de la entidad editora: "),
+            "lugar": input("Lugar de edición: "),
+            "numero": input("Número de la revista: "),
+            "fecha": input("Fecha de publicación: "),
+            "paginas": input("Número de páginas: ")
+        }
+        referencias = formato_articulo(**datos)
+
+    elif opcion == "3":
+        datos = {
+            "apellido": input("Apellido del autor: "),
+            "nombre": input("Nombre del autor: "),
+            "titulo": input("Título de la tesis: "),
+            "programa": input("Programa académico: "),
+            "lugar": input("Lugar de realización: "),
+            "universidad": input("Universidad de realización: "),
+            "fecha": input("Fecha de realización: "),
+            "paginas": input("Número de páginas: ")
+        }
+        referencias = formato_tesis(**datos)
+
+    else:
+        print("Opción no válida.")
+        return
+
+    print("\nReferencias generadas:\n")
+    for estilo, cita in referencias.items():
+        print(f"{estilo}:\n{cita}\n")
+
+
+if __name__ == "__main__":
+    while True:
+        run()
